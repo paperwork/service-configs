@@ -16,7 +16,7 @@ defmodule Paperwork do
             json(conn, %{hello: :world})
         end
 
-        mount Paperwork.Configs
+        mount Paperwork.Internal.Configs
     end
 
     rescue_from Unauthorized, as: e do
