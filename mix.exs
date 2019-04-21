@@ -14,7 +14,7 @@ defmodule Paperwork.Configs.MixProject do
     def application do
         [
             extra_applications: [:confex, :logger],
-            mod: {Paperwork.Application, []}
+            mod: {Paperwork.Configs.Application, []}
         ]
     end
 
