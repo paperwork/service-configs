@@ -1,5 +1,5 @@
-defmodule Paperwork.Internal.Configs do
-    use Paperwork.Server
+defmodule Paperwork.Configs.Endpoints.Internal.Configs do
+    use Paperwork.Configs.Server
     use Paperwork.Helpers.Response
 
     pipeline do

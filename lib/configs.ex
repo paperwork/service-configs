@@ -1,8 +1,17 @@
-defmodule Paperwork do
-    use Paperwork.Server
+defmodule Paperwork.Configs do
+    use Paperwork
+    use Paperwork.Configs.Server
     use Paperwork.Helpers.Response
-    # use Maru.Router #, make_plug: true
 
+    resources do
+        get do
+            json(conn, %{service: :paperwork_service_configs})
+        end
+
+        mount Paperwork.Configs.Endpoints.Internal.Configs
+    end
+
+    # TODO: Try to get rid of all this and define it within Paperwork.ex
     before do
         plug Plug.Logger
         plug Corsica, origins: "*"
@@ -10,13 +19,6 @@ defmodule Paperwork do
             pass: ["*/*"],
             json_decoder: Jason,
             parsers: [:urlencoded, :json, :multipart]
-    end
-    resources do
-        get do
-            json(conn, %{hello: :world})
-        end
-
-        mount Paperwork.Internal.Configs
     end
 
     rescue_from Unauthorized, as: e do
@@ -36,6 +38,13 @@ defmodule Paperwork do
 
         conn
         |> resp({:badrequest, %{status: 1, content: %{param: e.param, reason: e.reason}}})
+    end
+
+    rescue_from Maru.Exceptions.NotFound, as: e do
+        IO.inspect e
+
+        conn
+        |> resp({:notfound, %{status: 1, content: %{method: e.method, route: e.path_info}}})
     end
 
     rescue_from :all, as: e do
