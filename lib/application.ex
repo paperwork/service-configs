@@ -12,7 +12,7 @@ defmodule Paperwork.Configs.Application do
         children = [
             Paperwork.Ex,
             Paperwork.Configs.Server,
-            {Mongo, [name: :mongo, database: "configs", pool: DBConnection.Poolboy]}
+            {Mongo, [name: :mongo, url: Confex.fetch_env!(:paperwork, :mongodb)[:url], pool: DBConnection.Poolboy]}
         ]
 
         opts = [strategy: :one_for_one, name: Paperwork.Configs.Supervisor]
