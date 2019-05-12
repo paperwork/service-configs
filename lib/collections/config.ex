@@ -19,8 +19,15 @@ defmodule Paperwork.Collections.Config do
     @spec show(key :: String.t) :: {:ok, %__MODULE__{}} | {:notfound, nil}
     def show("system_id" = key) when is_binary(key) do
         case collection_find(%__MODULE__{key: key}, :key) |> strip_privates do
-            {:notfound, nil} -> create(%__MODULE__{key: key, value: UUID.uuid4()})
-            found -> found
+            {:notfound, nil} ->
+                create(%__MODULE__{
+                    key: key,
+                    value:
+                        Mongo.object_id()
+                        |> BSON.ObjectId.encode!()
+                })
+            found ->
+                found
         end
     end
 
