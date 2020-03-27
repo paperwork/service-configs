@@ -18,30 +18,22 @@ On MacOS using [brew](https://brew.sh):
 % brew install elixir
 ```
 
+### Paperwork local development environment
+
+Please refer to the [documentation](https://github.com/paperwork/paperwork/#local-development-environment).
+
 ## Building
 
-Fetching all dependencies:
+Fetching all dependencies and compiling:
 
 ```bash
-% mix deps.get
-```
-
-Compiling:
-
-```bash
-% mix compile
+% make local-build-develop
 ```
 
 ## Running
 
-First, we need a database. Let's run MongoDB on Docker:
+**Note:** Before starting this service the local development environment needs to be running!
 
 ```bash
-% docker run -it --rm --name mongodb -p 27017:27017 mongo:latest
-```
-
-Then we can run this service from within this cloned repository:
-
-```bash
-% iex -S mix
+% make local-run-develop
 ```
